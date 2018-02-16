@@ -1,22 +1,26 @@
 import React from 'react';
 import {render} from 'react-dom';
 
+const dummyData = ['eat a hamburger in Sapporo',
+'email Cyrus Samii', 'email Teymour', 'email Mary Joe',
+'mail to Meghann', 'mail to Rebecca' , 'letter to Gretchen',
+'letter to Alexa (DC)', 'phone to Firouz', 'ask Reema about flights'];
 
 class Todo extends React.Component {
   render() {
-    return ( <div style={{display: inline}}>
-      <p>{this.props.task}</p>
-      <button onClick={()=>null}>X</button>
-    </div> );
+    return ( /*<div style={{display: 'inline'}}>*/
+    <li>
+    <button onClick={()=>null}>X</button>{this.props.task}
+  </li> );
   }
 }
 
 class TodoList extends React.Component {
   render() {
     //style={{display: flex, flexDirection: column}}
-    return(<div>
-      <p> some stuff should go here</p>
-    </div>);
+    return(<ul>
+      {dummyData.map((task) => <Todo task={task}/>)}
+    </ul>);
   }
 }
 
