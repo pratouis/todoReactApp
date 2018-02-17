@@ -1,7 +1,9 @@
 import React from 'react';
 import InputLine from './InputLine';
 import TodoList from './TodoList';
+import axios from 'axios';
 
+const dbUrl = "http://localhost:3000/db";
 const dummyData = ['eat a hamburger in Sapporo',
 'email Cyrus Samii', 'email Teymour', 'email Mary Joe',
 'mail to Meghann', 'mail to Rebecca' , 'letter to Gretchen',
@@ -25,8 +27,14 @@ class TodoApp extends React.Component {
   }
 
   addTodo(task){
-    myTasks.push({'taskText': task, completed: false});
-    this.setState({todos: myTasks});
+		console.log('task: ', task);
+		debugger;
+		// axios.defaults.withCredentials = true;
+		axios.post(dbUrl+'/add', {task: task})
+			.then((res) => this.setState({todos: [...this.state.todos,res.data]}))
+			.catch((err) => console.log(err));
+    // myTasks.push({'taskText': task, completed: false});
+    // this.setState({todos: myTasks});
   }
 
   toggleTodo(task){
