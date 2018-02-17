@@ -25,12 +25,8 @@ class TodoApp extends React.Component {
   }
 
   addTodo(task){
-    console.log('task: ', task);
-    // if(task){
-
-      myTasks.push({'taskText': task, completed: false});
-      this.setState({todos: myTasks});
-    // }
+    myTasks.push({'taskText': task, completed: false});
+    this.setState({todos: myTasks});
   }
 
   render(){
