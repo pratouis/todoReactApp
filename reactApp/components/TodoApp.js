@@ -16,6 +16,7 @@ myTasks[4].completed = true;
 class TodoApp extends React.Component {
   constructor(props){
     super(props);
+    // this.addTo = this.addTo().bind(this)
     this.state = {todos: []}
   }
 
@@ -23,11 +24,20 @@ class TodoApp extends React.Component {
     this.setState({todos: myTasks});
   }
 
+  addTodo(task){
+    console.log('task: ', task);
+    // if(task){
+
+      myTasks.push({'taskText': task, completed: false});
+      this.setState({todos: myTasks});
+    // }
+  }
+
   render(){
     return(<div>
       <h3>Persis' Todo App</h3>
       <div className="inputline">
-      <InputLine/>
+      <InputLine submit={(task) => this.addTodo(task)}/>
       </div>
       <div className="todo">
         <TodoList todos={this.state.todos}/>
