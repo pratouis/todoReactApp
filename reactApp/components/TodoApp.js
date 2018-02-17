@@ -29,6 +29,15 @@ class TodoApp extends React.Component {
     this.setState({todos: myTasks});
   }
 
+  toggleTodo(task){
+    let tasks = myTasks.slice();
+    for(let i=0; i<tasks.length; i++){
+      if(tasks[i].taskText === task){
+        tasks[i].completed = !tasks[i].completed;
+      }
+    }
+    this.setState({todos: tasks});
+  }
   render(){
     return(<div>
       <h3>Persis' Todo App</h3>
@@ -36,7 +45,8 @@ class TodoApp extends React.Component {
       <InputLine submit={(task) => this.addTodo(task)}/>
       </div>
       <div className="todo">
-        <TodoList todos={this.state.todos}/>
+        <TodoList todos={this.state.todos}
+                  completed={(task) => this.toggleTodo(task)}/>
       </div>
 
     </div>)
