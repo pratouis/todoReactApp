@@ -4,13 +4,13 @@ import TodoList from './TodoList';
 import axios from 'axios';
 
 const dbUrl = "http://localhost:3000/db";
-const dummyData = ['eat a hamburger in Sapporo',
-'email Cyrus Samii', 'email Teymour', 'email Mary Joe',
-'mail to Meghann', 'mail to Rebecca' , 'letter to Gretchen',
-'letter to Alexa (DC)', 'phone to Firouz', 'ask Reema about flights'];
-const myTasks = dummyData.map((task) => {
-	return {'taskText': task, 'completed': false};
-})
+// const dummyData = ['eat a hamburger in Sapporo',
+// 'email Cyrus Samii', 'email Teymour', 'email Mary Joe',
+// 'mail to Meghann', 'mail to Rebecca' , 'letter to Gretchen',
+// 'letter to Alexa (DC)', 'phone to Firouz', 'ask Reema about flights'];
+// const myTasks = dummyData.map((task) => {
+// 	return {'taskText': task, 'completed': false};
+// })
 
 myTasks[4].completed = true;
 
@@ -23,7 +23,9 @@ class TodoApp extends React.Component {
   }
 
   componentDidMount(){
-    this.setState({todos: myTasks});
+		axios.get(dbUrl+'/all')
+			.then((res) => this.setState({todos: res.data}))
+			.catch((err) => console.log('err in fetching todos', err));
   }
 
   addTodo(task){
@@ -37,8 +39,9 @@ class TodoApp extends React.Component {
     // this.setState({todos: myTasks});
   }
 
-  toggleTodo(task){
-    let tasks = myTasks.slice();
+  toggleTodo(id){
+		axios.post(dbUrl+'/toggle')
+    let tasks = this.state.todos.slice();
     for(let i=0; i<tasks.length; i++){
       if(tasks[i].taskText === task){
         tasks[i].completed = !tasks[i].completed;
